@@ -79,6 +79,7 @@
 
 <!-- THREEJS -->
 		<script>
+			const divId = "web-you-3d-container";
 			let container = document.getElementById( divId);
             const paintingPath = container.dataset.url;
             const paintingW = parseFloat(container.dataset.width)/10;
@@ -90,7 +91,7 @@ var camera, scene, renderer, splineCamera, cameraHelper, cameraEye,SplineControl
 var binormal = new THREE.Vector3();
 var normal = new THREE.Vector3();
 		function init() {
-            const divId = "web-you-3d-container";
+            
 			// Получаем ссылки на кнопки
 			const animationOnButton = document.getElementById("animationOnButton");
 			const animationOffButton = document.getElementById("animationOffButton");
@@ -110,7 +111,7 @@ var normal = new THREE.Vector3();
 			// camera
             const halfCubeWidth = paintingW * 0.5;
             const halfCubeHeight = paintingH * 0.5;
-            const offset = paintingW/paintingH/paintingH*2;
+            const offset = paintingW/paintingH/paintingH*0.1;
 			console.log(offset)
 			const perimetrSpline = new THREE.CatmullRomCurve3([
 					new THREE.Vector3(-halfCubeWidth - offset, -halfCubeHeight - offset, 0),
@@ -138,13 +139,13 @@ var normal = new THREE.Vector3();
 			scene.background = new THREE.Color( 0xf0f0f0 );
             const paintingTexture = new THREE.TextureLoader().load(paintingPath);
             const paintingMaterial = new THREE.MeshBasicMaterial({ map: paintingTexture, side: THREE.DoubleSide });
-            const paintingGeometry = new THREE.BoxGeometry(paintingW, paintingH, 1);
+            const paintingGeometry = new THREE.BoxGeometry(paintingW, paintingH, 0.1);
             const painting = new THREE.Mesh(paintingGeometry, paintingMaterial);
             scene.add(painting);
 			const blackMaterial = new THREE.MeshBasicMaterial({ color: 0xFFFFFF ,DoubleSide:true});
-        	const frame_geometry = new THREE.BoxGeometry(paintingW * 1.05, paintingH * 1.05, 0.5);
+        	const frame_geometry = new THREE.BoxGeometry(paintingW * 1.05, paintingH * 1.05, 0.05);
         	const frame_cube = new THREE.Mesh(frame_geometry, blackMaterial);
-        	frame_cube.position.set(0, 0, -0.7)
+        	frame_cube.position.set(0, 0, -0.2)
         	scene.add(frame_cube);
 			// light
 			boundingBox = new THREE.Box3().setFromObject(painting);
@@ -201,7 +202,7 @@ var normal = new THREE.Vector3();
 			//container.appendChild( stats.dom );
 
 			// dat.GUI
-			if(false){
+			if(true){
 				var gui = new dat.GUI( { width: 300 } );
 
 				var folderGeometry = gui.addFolder( 'Geometry' );
@@ -321,7 +322,7 @@ var normal = new THREE.Vector3();
 
 		var material = new THREE.MeshLambertMaterial( { color: 0xff00ff, opacity: 0.0, transparent: true } );
 
-		var wireframeMaterial = new THREE.MeshBasicMaterial( { color: 0x000000, opacity: 0.0, wireframe: true, transparent: true } );
+		var wireframeMaterial = new THREE.MeshBasicMaterial( { color: 0x000000, opacity: 0.4, wireframe: true, transparent: true } );
 
 		function addTube() {
 
@@ -334,7 +335,7 @@ var normal = new THREE.Vector3();
 
 			var extrudePath = splines[ params.spline ];
 
-			tubeGeometry = new THREE.TubeBufferGeometry( extrudePath, params.extrusionSegments, 2, params.radiusSegments, params.closed );
+			tubeGeometry = new THREE.TubeBufferGeometry( extrudePath, params.extrusionSegments, 0.2, params.radiusSegments, params.closed );
 
 			addGeometry( tubeGeometry );
 
