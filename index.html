@@ -79,6 +79,16 @@
 
 <!-- THREEJS -->
 		<script>
+			let container = document.getElementById( divId);
+            const paintingPath = container.dataset.url;
+            const paintingW = parseFloat(container.dataset.width)/10;
+            const paintingH = parseFloat(container.dataset.height)/10;
+			var stats;
+
+var camera, scene, renderer, splineCamera, cameraHelper, cameraEye,SplineControls;
+
+var binormal = new THREE.Vector3();
+var normal = new THREE.Vector3();
 		function init() {
             const divId = "web-you-3d-container";
 			// Получаем ссылки на кнопки
@@ -96,10 +106,7 @@
     		    animateCamera(); // Вызываем функцию для обновления камеры
     		});
 
-			container = document.getElementById( divId);
-            const paintingPath = container.dataset.url;
-            const paintingW = parseFloat(container.dataset.width);
-            const paintingH = parseFloat(container.dataset.height);
+			
 			// camera
             const halfCubeWidth = paintingW * 0.5;
             const halfCubeHeight = paintingH * 0.5;
@@ -249,12 +256,7 @@
 
 		}
 
-		var container, stats;
-
-		var camera, scene, renderer, splineCamera, cameraHelper, cameraEye,SplineControls;
-
-		var binormal = new THREE.Vector3();
-		var normal = new THREE.Vector3();
+	
 
 		var pipeSpline = new THREE.CatmullRomCurve3( [
 			new THREE.Vector3( 0, 10, - 10 ), new THREE.Vector3( 10, 0, - 10 ),
